@@ -20,8 +20,10 @@ class CreateEmployeesTable extends Migration
             $table->string('lastname', 100);
             $table->string('patronymic', 100);
             $table->enum('gender', ['m', 'w']);
-            $table->foreign('created_by')->references('id')->on('users')->index();
-            $table->foreign('update_by')->references('id')->on('users')->index();
+            $table->integer('created_by')->unsigned();
+            $table->integer('updated_by')->unsigned();
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 

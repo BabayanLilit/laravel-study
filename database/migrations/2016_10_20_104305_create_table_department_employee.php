@@ -15,6 +15,8 @@ class CreateTableDepartmentEmployee extends Migration
     {
         Schema::create('department_employee', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('department_id')->unsigned();
+            $table->integer('employee_id')->unsigned();
             $table->foreign('department_id')->references('id')->on('departments');
             $table->foreign('employee_id')->references('id')->on('employees');
             $table->unique([
