@@ -10,9 +10,38 @@
 | to using a Closure or controller method. Build something great!
 |
 */
-use Illuminate\Http\Request;
 
-Route::get('/', function () {
-    //return view('welcome');
-    return view('tasks');
+
+Route::get('/', ['as' => 'department.grid', 'uses' => 'Department@grid']);
+
+Route::resource('department', 'Department', ['only' => [
+    'index',
+    'create',
+    'store',
+    'update',
+    'edit',
+    'destroy'
+]]);
+
+Route::resource('employee', 'Employee', ['only' => [
+    'index',
+    'create',
+    'store',
+    'update',
+    'edit',
+
+    'destroy'
+]]);
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+
+Menu::make('mainMenu', function($menu){
+
+    $menu->add('Сетка',     ['route'  => 'department.grid']);
+    $menu->add('Сотрудники',     ['route'  => 'employee.index']);
+    $menu->add('Отделы',    ['route'  => 'department.index']);
+
 });

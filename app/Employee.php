@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -30,20 +31,52 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Employee extends Model
 {
-    const FIELD_NAME = 'name';
-    const FIELD_LAST_NAME = 'lastname';
-    const FIELD_PATRONYMIC = 'patronymic';
-    const FIELD_GENDER = 'gender';
+    const GENDER_MAN = 'm';
+    const GENDER_WOMAN = 'w';
 
     protected $fillable = [
-        self::FIELD_NAME,
-        self::FIELD_LAST_NAME,
-        self::FIELD_PATRONYMIC,
-        self::FIELD_GENDER
+        'name',
+        'lastname',
+        'patronymic',
+        'gender',
+        'pay'
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        if (Auth::user()) {
+            static::updating(function($table)  {
+                $table->updated_by = Auth::user()->id;
+            });
+
+            static::saving(function($table)  {
+                $table->created_by = Auth::user()->id;
+            });
+        }
+    }
 
     public function departments()
     {
         return $this->belongsToMany(Department::class);
+    }
+
+    public function getDepartmentsNames()
+    {
+        return implode(', ', $this->departments->pluck('name')->toArray());
+    }
+
+    public function getGenderLabel()
+    {
+        return $this->getGenderLabels()[$this->gender] ?: '';
+    }
+
+    protected static function getGenderLabels()
+    {
+        return [
+            static::GENDER_MAN => 'Мужской',
+            static::GENDER_WOMAN => 'Женский',
+        ];
     }
 }

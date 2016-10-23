@@ -1,0 +1,19 @@
+body {
+  height: 100%;
+  width: 100%;
+}
+.employees .add-button {
+  float:right;
+}
+.employees .panel-heading {
+  min-height: 50px;
+}
+.employees .panel-heading::after {
+  content:'';
+  display: block;
+  clear: both;
+}
+.employee-form-container {
+  width: 500px;
+  margin: 10px auto;
+}

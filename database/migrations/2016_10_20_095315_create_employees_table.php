@@ -18,13 +18,16 @@ class CreateEmployeesTable extends Migration
             $table->timestamps();
             $table->string('name', 100);
             $table->string('lastname', 100);
-            $table->string('patronymic', 100);
+            $table->string('patronymic', 100)->nullable();
             $table->enum('gender', ['m', 'w']);
-            $table->integer('created_by')->unsigned();
-            $table->integer('updated_by')->unsigned();
+            $table->integer('pay')->nullable();
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->integer('updated_by')->unsigned()->nullable();
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('updated_by')->references('id')->on('users');
         });
+        $departments = [];
+
     }
 
     /**
