@@ -11,7 +11,7 @@ $(function () {
     var $body = $('body');
 
     $body
-        .on('click', '.employee-list .delete-button', function (e) {
+        .on('click', '.department-list .delete-button, .employee-list .delete-button', function (e) {
             var $this = $(this),
                 $form = $this.closest('form');
 
@@ -28,7 +28,7 @@ $(function () {
                 }
             });
         })
-        .on('submit', '.employee-form-container form', function (e) {
+        .on('submit', '.department-form-container form, .employee-form-container form', function (e) {
             e.preventDefault();
             var $this = $(this),
                 $buttonSave = $this.find('btn-save');
@@ -67,5 +67,5 @@ $(function () {
                     }
                 }
             });
-        });
+        })
 });

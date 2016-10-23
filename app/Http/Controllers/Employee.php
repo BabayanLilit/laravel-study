@@ -27,7 +27,7 @@ class Employee extends Controller
     {
         $employees = EmployeeModel::orderBy('created_at', 'desc')
             ->with('departments')
-            ->paginate(2);
+            ->paginate(5);
 
         return view('employees.index', ['employees' => $employees]);
     }
@@ -77,7 +77,9 @@ class Employee extends Controller
 
         }
 
-        $employee = EmployeeModel::create($request->all());
+        $data = $request->all();
+        $data['pay'] = (int) $request->pay;
+        $employee = EmployeeModel::create($data);
 
         if ($request->departments) {
             $employee->departments()->attach($request->departments);
@@ -147,7 +149,9 @@ class Employee extends Controller
 
         }
 
-        $employee->fill($request->all());
+        $data = $request->all();
+        $data['pay'] = (int) $request->pay;
+        $employee->fill($data);
 
         if ($newDepartments = array_diff($request->departments, $employee->departments->pluck('id')->toArray())) {
             $employee->departments()->attach($newDepartments);
@@ -176,9 +180,9 @@ class Employee extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function destroy(Request $request, EmployeeModel $employee)
+    public function destroy(EmployeeModel $employee)
     {
-        if (!Gate::allows('destroy')) {
+        if (!Gate::allows('destroy', $employee)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Нет доступа для удаления сотрудника'

@@ -6,7 +6,12 @@ $default['departments'] = $employee->departments->pluck('id')->toArray();
 $submit = old('submit') == 'Y';
 $oldDepartments = (array)old('departments', !$submit ? $default['departments'] : []);
 
+$title = 'Редактирование сотрудника' . $default['lastname'] . ' ' . $default['name'];
+
 ?>
+@section('title')
+    {{  $title }}
+@endsection
 @extends('layouts.app')
 
 @section('content')
@@ -14,8 +19,7 @@ $oldDepartments = (array)old('departments', !$submit ? $default['departments'] :
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Редактирование сотрудника
-                        - {{$default['lastname']}} {{ $default['name'] }}</div>
+                    <div class="panel-heading">{{ $title  }}</div>
                     <div class="employee-form-container">
                         @include('common.errors')
                         <form action="{{ url('employee/'.$default['id']) }}" method="POST">

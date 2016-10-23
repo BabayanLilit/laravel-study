@@ -5781,7 +5781,22 @@ body {
   display: block;
   clear: both; }
 
+.departments .add-button {
+  float: right; }
+
+.departments .panel-heading {
+  min-height: 50px; }
+
+.departments .panel-heading::after {
+  content: '';
+  display: block;
+  clear: both; }
+
 .employee-form-container {
+  width: 500px;
+  margin: 10px auto; }
+
+.department-form-container {
   width: 500px;
   margin: 10px auto; }
 

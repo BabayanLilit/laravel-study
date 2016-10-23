@@ -19,6 +19,7 @@
                 'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+    <title> @yield('title') </title>
 </head>
 <body>
 <div id="app">
@@ -57,7 +58,7 @@
                                     <a href="{{ url('/logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        Logout
+                                        Выйти
                                     </a>
 
                                     <form id="logout-form" action="{{ url('/logout') }}" method="POST"
