@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Department;
 use App\Employee as EmployeeModel;
 use App\Repositories\EmployeeRepository;
+use App\User;
 use DB;
+use Gate;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
@@ -53,6 +55,13 @@ class Employee extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows('add', EmployeeModel::class)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Нет доступа для добавления сотрудника'
+            ]);
+        }
+
         $validator = Validator::make(
             $request->all(),
             $this->getValidateRulesForAddEdit(),
@@ -116,6 +125,13 @@ class Employee extends Controller
      */
     public function update(Request $request, EmployeeModel $employee)
     {
+        if (!Gate::check('edit', $employee)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Нет доступа для редактирования сотрудника'
+            ]);
+        }
+
         $validator = Validator::make(
             $request->all(),
             $this->getValidateRulesForAddEdit(),
@@ -156,14 +172,35 @@ class Employee extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param EmployeeModel $employee
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function destroy($id)
+    public function destroy(Request $request, EmployeeModel $employee)
     {
+        if (!Gate::allows('destroy')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Нет доступа для удаления сотрудника'
+            ]);
+        }
 
+        if ($employee->delete()) {
+          return response()->json([
+              'success' => true,
+              'message' => 'Сотрудник успешно удален'
+          ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'К сожалению не удалось выполнить операцию. Попробуйте позже'
+        ]);
     }
 
+    /**
+     * @return array
+     */
     private function getValidateRulesForAddEdit()
     {
         return [
@@ -174,6 +211,9 @@ class Employee extends Controller
         ];
     }
 
+    /**
+     * @return array
+     */
     private function getValidateMessagesForAddEdit()
     {
         return [

@@ -8,12 +8,18 @@ body {
 .employees .panel-heading {
   min-height: 50px;
 }
+
 .employees .panel-heading::after {
   content:'';
   display: block;
   clear: both;
 }
+
 .employee-form-container {
   width: 500px;
   margin: 10px auto;
+}
+
+.delete-button {
+  cursor:pointer;
 }

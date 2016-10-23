@@ -5785,4 +5785,7 @@ body {
   width: 500px;
   margin: 10px auto; }
 
+.delete-button {
+  cursor: pointer; }
+
 /*# sourceMappingURL=app.css.map */

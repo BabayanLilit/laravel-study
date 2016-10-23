@@ -7,7 +7,7 @@
 <div class="container employees">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
+            <div class="panel panel-default employee-list">
                 <div class="panel-heading">Сотрудники
                     <a href="{{ url('employee/create/')}}" class="btn btn-default add-button">Добавить</a>
                 </div>

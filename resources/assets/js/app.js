@@ -8,10 +8,26 @@
 require('./bootstrap');
 
 $(function () {
-    console.log('dsadsad');
     var $body = $('body');
 
     $body
+        .on('click', '.employee-list .delete-button', function (e) {
+            var $this = $(this),
+                $form = $this.closest('form');
+
+            $.ajax({
+                url: $form.attr('action'),
+                type: 'post',
+                dataType: 'JSON',
+                data: $form.serialize(),
+                success: function (result) {
+                    alert(result.message);
+                    if (result.success) {
+                        $this.closest('tr').remove();
+                    }
+                }
+            });
+        })
         .on('submit', '.employee-form-container form', function (e) {
             e.preventDefault();
             var $this = $(this),
@@ -24,8 +40,7 @@ $(function () {
                 data : $this.serialize(),
                 success: function(result) {
                     $('.form-group').removeClass('has-error');
-                    console.log(result.errors);
-                    console.log(result);
+
                     if (result.success) {
                         alert(result.message);
                         if (result.redirect) {

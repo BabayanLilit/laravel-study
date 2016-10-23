@@ -55,23 +55,39 @@ class Employee extends Model
                 $table->created_by = Auth::user()->id;
             });
         }
+
+        static::deleting(function(Employee $employee) {
+            $employee->departments()->detach();
+        });
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function departments()
     {
         return $this->belongsToMany(Department::class);
     }
 
+    /**
+     * @return string
+     */
     public function getDepartmentsNames()
     {
         return implode(', ', $this->departments->pluck('name')->toArray());
     }
 
+    /**
+     * @return string
+     */
     public function getGenderLabel()
     {
         return $this->getGenderLabels()[$this->gender] ?: '';
     }
 
+    /**
+     * @return array
+     */
     protected static function getGenderLabels()
     {
         return [
