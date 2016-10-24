@@ -12,6 +12,9 @@ $title = 'Добавление сотрудника';
                 <div class="panel panel-default">
                     <div class="panel-heading">{{ $title }}</div>
                     <div class="employee-form-container">
+                        @if(!count($departments))
+                            Необходимо сначала создать отделы
+                            @else
                         @include('common.errors')
                         <form action="{{ url('employee/') }}" method="POST">
                             {{ csrf_field() }}
@@ -69,6 +72,7 @@ $title = 'Добавление сотрудника';
                                 Сохранить
                             </button>
                         </form>
+                            @endif
                     </div>
                 </div>
             </div>
