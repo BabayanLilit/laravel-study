@@ -9,11 +9,8 @@ $oldDepartments = (array)old('departments', !$submit ? $default['departments'] :
 $title = 'Редактирование сотрудника' . $default['lastname'] . ' ' . $default['name'];
 
 ?>
-@section('title')
-    {{  $title }}
-@endsection
 @extends('layouts.app')
-
+@section('title', $title)
 @section('content')
     <div class="container">
         <div class="row">

@@ -2,9 +2,7 @@
 $title = 'Добавление сотрудника';
 ?>
 @extends('layouts.app')
-@section('title')
-{{  $title }}
-@endsection
+@section('title', $title)
 @section('content')
     <div class="container">
         <div class="row">

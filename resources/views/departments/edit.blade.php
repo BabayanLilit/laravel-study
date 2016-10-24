@@ -4,11 +4,8 @@
 $title = 'Редактирование отдела - ' . $department->name;
 
 ?>
-@section('title')
-    {{  $title }}
-@endsection
 @extends('layouts.app')
-
+@section('title', $title)
 @section('content')
     <div class="container">
         <div class="row">
