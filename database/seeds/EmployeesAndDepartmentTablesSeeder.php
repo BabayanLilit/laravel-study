@@ -19,6 +19,7 @@ class EmployeesAndDepartmentTablesSeeder extends Seeder
         $departments[] = $this->createDepartment('PR-отдел');
 
         $employees = $this->getEmployeeData();
+
         foreach ($employees as $employeeData) {
             $this->createEmployee($employeeData, $this->randDepartments($departments));
         }
@@ -71,7 +72,7 @@ class EmployeesAndDepartmentTablesSeeder extends Seeder
 
     private function randDepartments($departments)
     {
-        $keys = array_rand($departments, rand(1, count($departments)));
+        $keys = (array) array_rand($departments, rand(1, count($departments)));
         $result = [];
 
         foreach ($keys as $key) {
